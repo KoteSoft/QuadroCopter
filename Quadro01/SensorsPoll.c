@@ -88,7 +88,7 @@ uint8_t SensorsPoll()
 		HMC5883L_Test(0);
 	}
 	
-	ADCSRA=1<<ADEN|1<<ADSC|0<<ADATE|0<<ADIF|1<<ADIE|1<<ADPS2|1<<ADPS1|1<<ADPS0;
+	ADCSRA = 1<<ADEN | 1<<ADSC | 0<<ADATE | 0<<ADIF | 1<<ADIE | 1<<ADPS2 | 1<<ADPS1 | 1<<ADPS0;
 	
 	if (U_Batt.value < coeffs[U_Alarm].value)
 	{

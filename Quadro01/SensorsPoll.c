@@ -172,7 +172,7 @@ double_t Heading_displacement_calc(double_t Current, double_t Target)
 {
 	double_t X = Target - Current;
 	if (fabs(X) < 180.0)
-	return X;
+	    return X;
 
 	if (X > 0.0)
 	{

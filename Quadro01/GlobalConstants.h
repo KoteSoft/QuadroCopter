@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include "ParamsDef.h"
 
-extern const double g;		//Ускорение свободного падения (м/с^2)
+extern const double_t g;		//Ускорение свободного падения (м/с^2)
 extern const double_t Step;	//Шаг квантования по времени (с)
 extern const uint16_t Alarm_Long;
 extern const double_t Pa2mmHg;	//1 Па = 0.00750061683 мм рт.ст.

@@ -25,6 +25,7 @@
 #include "Params.h"
 #include "Timer0.h"
 #include "Output.h"
+#include "ADC.h"
 
 #define REG_INPUT_START 1000
 #define REG_INPUT_NREGS 99

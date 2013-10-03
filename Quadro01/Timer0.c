@@ -10,6 +10,7 @@ static uint8_t BUSY = 0;
 
 static uint16_t AlarmTimer;
 
+/*Прерывание, возникающее каждые 0,004096сек.*/
 ISR (TIMER0_OVF_vect, ISR_NOBLOCK)
 {
 	if (!BUSY)

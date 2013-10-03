@@ -53,7 +53,7 @@ uint8_t BMP085_StartMeasUP()
 
 uint8_t BMP085_GetUT()
 {
-	uint8_t LSB, MSB, XLSB;	
+	uint8_t LSB, MSB;	
 	//_delay_ms(20);
 	
 	twi(TWI_START);

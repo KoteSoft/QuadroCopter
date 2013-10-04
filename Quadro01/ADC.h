@@ -13,7 +13,6 @@
 #include "GlobalConstants.h"
 #include "Params.h"
 
+void ADC_Init();
 
 #endif /* ADC_H_ */
-
-void ADC_Init();

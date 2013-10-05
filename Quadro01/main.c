@@ -29,10 +29,10 @@ int main(void)
 	
 	/*Настраиваем порты ввода-вывода*/
 	DDRB = 1<<PORTB0|1<<PORTB1|1<<PORTB2|1<<PORTB3|1<<PORTB4|1<<PORTB5|1<<PORTB6|1<<PORTB7;
-    DDRC = 1<<PORTC0|1<<PORTC1|1<<PORTC2|0<<PORTC3|0<<PORTC4|0<<PORTC5|0<<PORTC6|0<<PORTC7;
-    DDRD = 0<<PORTD0|0<<PORTD1|1<<PORTD2|0<<PORTD3|1<<PORTD4|0<<PORTD5|0<<PORTD6|0<<PORTD7;
+	DDRC = 1<<PORTC0|1<<PORTC1|1<<PORTC2|0<<PORTC3|0<<PORTC4|0<<PORTC5|0<<PORTC6|0<<PORTC7;
+	DDRD = 0<<PORTD0|0<<PORTD1|1<<PORTD2|0<<PORTD3|1<<PORTD4|0<<PORTD5|0<<PORTD6|0<<PORTD7;
 
-    PORTB = 1;
+	PORTB = 1;
 	PORTD = 1 << PORTD2;
     
 	/*Тяга двигателей на минимум*/
@@ -42,25 +42,25 @@ int main(void)
     }
 	
 	/*Настраиваем I2C*/
-	 TWSR = 0x00;
-	 TWBR = ((F_CPU / I2C_SPEED) - 16) / 2;  
-	 _delay_us(10);
+	TWSR = 0x00;
+	TWBR = ((F_CPU / I2C_SPEED) - 16) / 2;  
+	_delay_us(10);
 
 	/*Включаем Таймер0*/
 	TCCR0 = 1<<CS02 | 0<<CS01 | 0<<CS00;
 	
 	/*Включаем Таймер1*/
-    OCR1A=HIGH; //TOP
-    TCCR1A=0<<COM1A1|0<<COM1A0|1<<COM1B1|0<<COM1B0|0<<FOC1A|0<<FOC1B|1<<WGM11|1<<WGM10;
-    TCCR1B=0<<ICNC1|0<<ICES1|1<<WGM13|1<<WGM12|0<<CS12|0<<CS11|1<<CS10;
-    TIMSK= 1<<TOIE2 | 1<<OCIE1A|1<<OCIE1B|0<<TOIE1|1<<TOIE0|0<<OCIE0;
-    OCR1B=LOW;
+	OCR1A=HIGH; //TOP
+	TCCR1A=0<<COM1A1|0<<COM1A0|1<<COM1B1|0<<COM1B0|0<<FOC1A|0<<FOC1B|1<<WGM11|1<<WGM10;
+	TCCR1B=0<<ICNC1|0<<ICES1|1<<WGM13|1<<WGM12|0<<CS12|0<<CS11|1<<CS10;
+	TIMSK= 1<<TOIE2 | 1<<OCIE1A|1<<OCIE1B|0<<TOIE1|1<<TOIE0|0<<OCIE0;
+	OCR1B=LOW;
 	
 	/*Включаем АЦП*/
-    ADC_Init();   
+	ADC_Init();   
     
 	/*Разрешаем работу прерываний*/
-    sei();
+	sei();
 	
 	/*Настраиваем Modbus*/
 	eMBErrorCode eStatus = eMBInit( MB_RTU, 0x01, 0, 57600, MB_PAR_NONE );
@@ -72,8 +72,8 @@ int main(void)
 	/*Загружаем в Holding Registers и в массив параметров значения из EEPROM*/
 	ModbusInitValues();
 		
-    while(1)
-    {
+	while(1)
+	{
 		/*Актуализируем значения Modbus-регистров в соответствии со значениями параметров*/
 		ModbusLoader();
 		/*Актуализируем значения параметров в соответствии со значениями Holding Registers*/
@@ -84,34 +84,34 @@ int main(void)
 		
 		/*Ресурсоемкий расчет курса*/		
 		Course_Calc();
-    }
+	}
 }
 
 eMBErrorCode eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 {
-    eMBErrorCode    eStatus = MB_ENOERR;
-    int             iRegIndex;
+	eMBErrorCode    eStatus = MB_ENOERR;
+	int             iRegIndex;
 
-    if( ( usAddress >= REG_INPUT_START )
-    && ( usAddress + usNRegs <= REG_INPUT_START + REG_INPUT_NREGS ) )
-    {
-        iRegIndex = ( int )( usAddress - usRegInputStart );
-        while( usNRegs > 0 )
-        {
-            *pucRegBuffer++ =
-            ( unsigned char )( usRegInputBuf[iRegIndex] >> 8 );
-            *pucRegBuffer++ =
-            ( unsigned char )( usRegInputBuf[iRegIndex] & 0xFF );
-            iRegIndex++;
-            usNRegs--;
-        }
-    }
-    else
-    {
-        eStatus = MB_ENOREG;
-    }
+	if( ( usAddress >= REG_INPUT_START )
+	&& ( usAddress + usNRegs <= REG_INPUT_START + REG_INPUT_NREGS ) )
+	{
+		iRegIndex = ( int )( usAddress - usRegInputStart );
+	        while( usNRegs > 0 )
+	        {
+			*pucRegBuffer++ =
+			( unsigned char )( usRegInputBuf[iRegIndex] >> 8 );
+			*pucRegBuffer++ =
+			( unsigned char )( usRegInputBuf[iRegIndex] & 0xFF );
+			iRegIndex++;
+			usNRegs--;
+		}
+	}
+	else
+	{
+		eStatus = MB_ENOREG;
+	}
 
-    return eStatus;
+	return eStatus;
 }
 
 eMBErrorCode
